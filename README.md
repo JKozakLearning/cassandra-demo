@@ -86,6 +86,25 @@ chmod +x demo.sh restore.sh
 
 Start może potrwać kilka minut przy pierwszym pobraniu obrazu. Węzły startują sekwencyjnie (`cassandra-1`, potem `cassandra-2`, potem `cassandra-3`), żeby uniknąć kolizji tokenów przy równoległym bootstrapie. Skrypt czeka, aż nodetool zgłosi trzy węzły `UN`, wykonuje `init.cql`, a potem uruchamia czytelny podgląd demo: RF, próg QUORUM/ONE, status każdego węzła i aktualne zdarzenia odczytane z tabeli dla `u-42`. Podgląd dopisuje kolejne odświeżenia bez czyszczenia ekranu, więc wcześniejsze polecenia i wyniki zostają widoczne. `Ctrl+C` kończy podgląd, ale zostawia kontenery uruchomione. Etapy A/B/C opisują w terminalu przykładowy zapis, adresy replik partycji (`nodetool getendpoints`), odczyt oraz rezultat wymaganego poziomu spójności.
 
+## VS Code w WSL
+
+Zainstaluj [Visual Studio Code](https://code.visualstudio.com/) w Windows oraz rozszerzenie **WSL** od Microsoftu. Następnie w Ubuntu przejdź do katalogu projektu i otwórz go w VS Code:
+
+```bash
+cd ~/cassandra-quorum-demo
+code .
+```
+
+W oknie VS Code zainstaluj rozszerzenie **Docker** od Microsoftu (`ms-azuretools.vscode-docker`). Jeśli VS Code zaproponuje instalację po stronie WSL, wybierz **Install in WSL: Ubuntu**. Rozszerzenie WSL powinno działać lokalnie w Windows, a Docker w środowisku Ubuntu.
+
+Otwórz terminal VS Code (**Terminal → New Terminal**) i uruchom klaster:
+
+```bash
+./demo.sh start
+```
+
+Widok **Containers** w pasku aktywności VS Code pokaże kontenery Cassandra. Jeśli nie widać paska, otwórz **View → Open View…** i wybierz **Containers**. Możesz też zarządzać klastrem z terminala, np. `docker compose ps`, `docker compose logs -f` i `docker compose down`.
+
 ## Prezentacja
 
 Menu interaktywne: `./demo.sh`. Możesz też uruchamiać etapy osobno:
